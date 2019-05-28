@@ -1,4 +1,4 @@
-from config import username, password
+from config import username, password, url
 import requests
 from bs4 import BeautifulSoup as soup
 
@@ -8,7 +8,7 @@ class reader:
         self.session = self.authenticate()
 
     def authenticate(self):
-        login_url = 'https://tas.instructure.com/login/canvas'
+        login_url = '{}/login/canvas'.format(url)
         session = requests.Session()
         login_page = session.get(login_url)
         login_page_soup = soup(login_page.text, 'lxml')
@@ -29,9 +29,9 @@ class reader:
         return session
 
     def get_stats(self, courseid):
-        stats_url = 'https://tas.instructure.com/courses/{}/statistics'
-        print('getting data from {}'.format(stats_url.format(courseid)))
-        stats_page = self.session.get(stats_url.format(courseid))
+        stats_url = '{}/courses/{}/statistics'
+        print('getting data from {}'.format(stats_url.format(url, courseid)))
+        stats_page = self.session.get(stats_url.format(url, courseid))
         stat_tables = soup(stats_page.text, 'lxml').find_all(id='stats')
         tables = stat_tables[0].find_all('table')
         stats = []
