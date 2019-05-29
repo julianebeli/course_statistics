@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup as soup
 
 
-class reader:
+class Reader:
     def __init__(self):
         self.session = self.authenticate()
 
@@ -48,6 +48,6 @@ class reader:
 
 
 if __name__ == "__main__":
-    R = reader()
+    R = Reader()
     course = 25606
     print(R.get_stats(course))
